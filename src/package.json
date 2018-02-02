@@ -1,0 +1,16 @@
+{
+  "name": "ngx-kit",
+  "version": "0.0.1",
+  "description": "some useful components for angular app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "angular",
+    "ngx",
+    "kit"
+  ],
+  "author": "frontlich",
+  "license": "MIT"
+}
