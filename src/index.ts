@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
-import { DragModule } from './directives/drag/drag.module';
+
+import { DragModule, DragDirective } from './directives/drag';
+import { TrimModule, TrimDirective } from './directives/trim';
 
 export {
-  DragModule
+  DragModule, DragDirective,
+  TrimModule, TrimDirective
 }
 
 @NgModule({
-  imports: [DragModule],
-  exports: [DragModule]
+  imports: [DragModule,TrimModule],
+  exports: [DragModule,TrimModule]
 })
-export class NgxKitModule {}
+export class NgxKitModule { }

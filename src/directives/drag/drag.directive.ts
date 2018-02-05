@@ -1,117 +1,131 @@
-/**
- *frontlic - 2017-12-18
- *draggable directive
- */
-import { Directive, OnInit, Input, Output, ElementRef, HostListener, HostBinding, EventEmitter } from '@angular/core';
+import { Directive, OnInit, Input, Output, HostListener, ElementRef, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription'
 import 'rxjs/add/observable/timer';
 
+import { DragConfig } from './drag.config';
+
+/**
+ * 拖拽指令，选择器三选一;
+ * drag : 任意拖拽，
+ * dragX: 沿X轴拖拽
+ * dragY：沿Y轴拖拽
+ */
 @Directive({
-  selector: '[drag],[dragX],[dragY]'
+  selector: '[nk-drag],[nk-dragX],[nk-dragY]'
 })
 export class DragDirective implements OnInit {
   private ele: any;
   private dragSub: Subscription = new Subscription();
-  private canDrag: boolean = false;
-  private startY: number;
-  private startX: number;
-  private transition: string;
+  private _canDrag: boolean = false;
+  private startX: number;//起始位置x
+  private startY: number;//起始位置y
+  private _zIndex: number;
+  private _transition: string;
 
-  @Input() stopDrag: boolean = false;
-  @Input() delay: number = 0;//默认延时0毫秒
-  @Input() drag: boolean = true;
-  @Input() dragX: boolean = true;
-  @Input() dragY: boolean = true;
+  /** 是否能拖拽 */
+  @Input() canDrag: boolean = true;
+  /** 拖拽之前的延时毫秒数，默认为0毫秒 */
+  @Input() delay: number = 0;
+  /** 在组件中最大的z-index值，为了使元素在拖拽时不被遮挡 */
+  @Input() maxZIndex: number = 9999;
+  /** 拖拽时是否阻止元素上的点击事件，默认阻止 */
+  @Input() stopClickEvent: boolean = true;
+  @Input('nk-drag') private drag: boolean = true;
+  @Input('nk-dragX') private dragX: boolean = true;
+  @Input('nk-dragY') private dragY: boolean = true;
 
-  @Output() dragStart = new EventEmitter();
-  @Output() dragMove = new EventEmitter();
-  @Output() dragEnd = new EventEmitter();
+  @Output() dragStart = new EventEmitter<{dom: HTMLElement, left: number, top: number}>();
+  @Output() dragMove = new EventEmitter<{dom: HTMLElement, left: number, top: number}>();
+  @Output() dragEnd = new EventEmitter<{dom: HTMLElement, left: number, top: number}>();
 
   @HostListener('click', ['$event'])
-  onClick(e){
-    if(!this.stopDrag){
+  onClick(e: MouseEvent) {
+    if (this.canDrag && this.stopClickEvent) {
       return false;
     }
   }
-  
+
   @HostListener('mousedown', ['$event'])
-  moveStart(e){
-    if(this.stopDrag){return}
+  moveStart(e: MouseEvent) {
+    if (!this.canDrag) { return }
     this.dragSub = Observable.timer(this.delay).subscribe(() => {
-      this.canDrag = true;
-      if(!this.drag || !this.dragY){
+      this._canDrag = true;
+      if (!this.drag || !this.dragY) {
         this.startY = e.clientY - this.ele.offsetTop;
       }
-      if(!this.drag || !this.dragX){
+      if (!this.drag || !this.dragX) {
         this.startX = e.clientX - this.ele.offsetLeft;
       }
-      this.zIndex = 2;
+      this.ele.style.zIndex = this.maxZIndex;
       this.ele.style.transition = 'none';
-      this.dragStart.emit({dom: this.ele, left: this.ele.offsetLeft, top: this.ele.offsetTop});
+      this.dragStart.emit({ dom: this.ele, left: this.ele.offsetLeft, top: this.ele.offsetTop });
     })
   }
 
   @HostListener('mousemove', ['$event'])
-  moveing(e){
-    if(!this.canDrag){
+  moving(e: MouseEvent) {
+    if (!this._canDrag) {
       return false;
     }
 
     let top = e.clientY - this.startY,
-        left = e.clientX - this.startX;
+      left = e.clientX - this.startX;
 
-    if(top < 0){
+    if (top < 0) {
       top = 0;
     }
-    if(top > this.ele.offsetParent.offsetHeight - this.ele.offsetHeight){
+    if (top > this.ele.offsetParent.offsetHeight - this.ele.offsetHeight) {
       top = this.ele.offsetParent.offsetHeight - this.ele.offsetHeight;
     }
-    if(left < 0){
+    if (left < 0) {
       left = 0;
     }
-    if(left > this.ele.offsetParent.offsetWidth - this.ele.offsetWidth){
+    if (left > this.ele.offsetParent.offsetWidth - this.ele.offsetWidth) {
       left = this.ele.offsetParent.offsetWidth - this.ele.offsetWidth;
     }
 
-    if(!this.drag || !this.dragX){
+    if (!this.drag || !this.dragX) {
       this.ele.style.left = left + 'px';
     }
-    if(!this.drag || !this.dragY){
+    if (!this.drag || !this.dragY) {
       this.ele.style.top = top + 'px';
     }
-    this.dragMove.emit({dom: this.ele, left: left, top: top});
+    this.dragMove.emit({ dom: this.ele, left: left, top: top });
     return false;
   }
 
   @HostListener('mouseup')
-  moveEnd(){
+  moveEnd() {
     this.reset();
   }
 
   @HostListener('mouseout')
-  moveOut(){
+  moveOut() {
     this.reset()
   }
 
-  reset(){
+  reset() {
     this.dragSub.unsubscribe();
-    if(this.canDrag){
-      this.zIndex = 1;
-      this.ele.style.transition = this.transition || '';
-      this.dragEnd.emit({dom: this.ele, left: this.ele.offsetLeft, top: this.ele.offsetTop});
+    if (this._canDrag) {
+      this.ele.style.zIndex = this._zIndex;
+      this.ele.style.transition = this._transition;
+      this.dragEnd.emit({ dom: this.ele, left: this.ele.offsetLeft, top: this.ele.offsetTop });
     }
-    this.canDrag = false;
+    this._canDrag = false;
   }
 
-  @HostBinding('style.zIndex') zIndex = 1;
-
-  constructor(private el:ElementRef) {
+  constructor(private el: ElementRef, private _config: DragConfig) {
+    Object.assign(this, _config);
     this.ele = this.el.nativeElement;
   }
 
   ngOnInit() {
-    this.transition = this.ele.style.transition;
-    this.ele.style.position = 'absolute';
+    this._zIndex = this.ele.style.zIndex;
+    this._transition = this.ele.style.transition;
+    if (!this.ele.style.position) {
+      console.error('drag指令：样式中必须要有定位属性');
+      this.canDrag = false;
+    }
   }
 }
