@@ -1,18 +1,17 @@
 import { Directive, Input, HostListener, Optional } from '@angular/core';
 import { NgModel, FormControlName } from '@angular/forms';
 
-import { TrimConfig } from './trim.config';
-
+/**
+ * trim指令：去除文本框或文本域输入内容的空格
+ */
 @Directive({
-  selector: 'input[nk-trim],textarea[nk-trim]'
+  selector: 'input[type=text][nk-trim],textarea[nk-trim]'
 })
 export class TrimDirective {
 
-  @Input('trim') flag: 'all' | 'default' = 'all';//默认全局匹配
+  @HostListener('input', ['$event.target', '$event.target.value']) inputEvent(ele: HTMLInputElement | HTMLTextAreaElement, v: string) {
 
-  @HostListener('input', ['$event.target', '$event.target.value']) inputEvent(ele: HTMLInputElement|HTMLTextAreaElement, v: string) {
-
-    let trimmedStr = this.flag === 'all' ? v.replace(/\s/g, '') : v.trim();
+    const trimmedStr = v.replace(/\s/g, '');
 
     ele.value = trimmedStr;
 
@@ -25,10 +24,7 @@ export class TrimDirective {
   }
 
   constructor(
-    private config: TrimConfig,
     @Optional() private ngM: NgModel,
     @Optional() private fcName: FormControlName
-  ) {
-    Object.assign(this, config);
-  }
+  ) { }
 }
