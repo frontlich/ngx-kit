@@ -60,7 +60,7 @@ export class SwitcherComponent implements ControlValueAccessor {
 
   toggle() {
     this.isOpen = !this.isOpen;
-    this.onChange(this.isOpen ? this.checked : this.unchecked);    
+    this.onChange(this.isOpen ? this.checked : this.unchecked);
   }
 
   writeValue(v: any) {

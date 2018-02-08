@@ -7,14 +7,16 @@ import { NgxKitModule } from "ngx-kit";
 import {
   APP_COMPONENTS,
   SwitcherComponent,
-  DragComponent, TrimComponent
+  DragComponent, TrimComponent,
+  TabComponent
 } from './components';
 
 const APP_ROUTES: Routes = [
   {
     path: 'components',
     children: [
-      { path: 'switcher', component: SwitcherComponent }
+      { path: 'switcher', component: SwitcherComponent },
+      { path: 'tab', component: TabComponent }
     ]
   },
   {
