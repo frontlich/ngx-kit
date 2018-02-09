@@ -19,6 +19,14 @@
     "ngx",
     "kit"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontlich/ngx-kit.git"
+  },
   "author": "frontlich",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frontlich/ngx-kit/issues"
+  },
+  "homepage": "https://github.com/frontlich/ngx-kit#readme"
 }
