@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 
+import { BreadCrumbModule, BreadCrumbComponent } from './components/breadcrumb';
 import { SwitcherModule, SwitcherComponent } from './components/switcher';
 import { TabModule, TabComponent, TabIndexDirective, TabContentDirective } from './components/tab';
 
@@ -8,6 +9,7 @@ import { DragModule, DragDirective } from './directives/drag';
 import { TrimModule, TrimDirective } from './directives/trim';
 
 export {
+  BreadCrumbModule, BreadCrumbComponent,
   SwitcherModule, SwitcherComponent,
   TabModule, TabComponent, TabIndexDirective, TabContentDirective,
   AutoHeightModule, AutoheightDirective,
@@ -17,11 +19,11 @@ export {
 
 @NgModule({
   imports: [
-    SwitcherModule, DragModule, 
+    BreadCrumbModule, SwitcherModule, DragModule, 
     AutoHeightModule, TrimModule, TabModule
   ],
   exports: [
-    SwitcherModule, DragModule, 
+    BreadCrumbModule, SwitcherModule, DragModule, 
     AutoHeightModule, TrimModule, TabModule
   ]
 })

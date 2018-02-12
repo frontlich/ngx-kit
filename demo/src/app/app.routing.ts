@@ -6,15 +6,16 @@ import { NgxKitModule } from "ngx-kit";
 
 import {
   APP_COMPONENTS,
-  SwitcherComponent,
-  DragComponent, TrimComponent,
-  TabComponent
+  BreadCrumbComponent, SwitcherComponent, TabComponent,
+  AutoHeightComponent, DragComponent, TrimComponent
 } from './components';
 
 const APP_ROUTES: Routes = [
   {
     path: 'components',
+    data: { breadcrumb: '组件' },
     children: [
+      { path: 'breadcrumb', data: { breadcrumb: '面包屑导航' }, component: BreadCrumbComponent },
       { path: 'switcher', component: SwitcherComponent },
       { path: 'tab', component: TabComponent }
     ]
@@ -22,6 +23,7 @@ const APP_ROUTES: Routes = [
   {
     path: 'directives',
     children: [
+      { path: 'autoheight', component: AutoHeightComponent },
       { path: 'drag', component: DragComponent },
       { path: 'trim', component: TrimComponent }
     ]
