@@ -1,8 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 
-import { AppRoutingModule } from './app.routing';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { AppNavComponent } from './app-nav.component';
@@ -15,7 +14,6 @@ import { AppNavComponent } from './app-nav.component';
   ],
   imports: [
     BrowserModule,
-    RouterModule,
     AppRoutingModule
   ],
   providers: [],

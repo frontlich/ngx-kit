@@ -13,11 +13,11 @@ export class DragModule {
       ngModule: DragModule, providers: [
         {
           provide: DRAG_CONFIG_TOKEN,
-          useValue: config ? config : {
+          useValue: Object.assign({
             delay: 0,//默认延时0毫秒
             maxZIndex: 9999,//默认最大z-index为9999
             stopClickEvent: true//默认组件拖拽时元素上的点击事件
-          }
+          }, config)
         }
       ]
     };

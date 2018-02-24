@@ -1,0 +1,24 @@
+<div class="page">
+  <div class="page-size">
+    显示：
+    <a [class.active]="data.pageSize === 10" (click)="changePageSize(10)">10</a>
+    <a [class.active]="data.pageSize === 20" (click)="changePageSize(20)">20</a>
+    <a [class.active]="data.pageSize === 50" (click)="changePageSize(50)">50</a>
+    条/页
+    <span style="margin-left: 15px;">共{{data.totalNum}}条</span>
+  </div>
+  <div class="page-center">
+    <ul class="pagination">
+      <li>&lt;</li>
+      <!-- <li (click)="changePage(item.page)" [ngClass]="{'active': item.page==pagerData.pageNo}" *ngFor="let item of pagerList; let i = index">
+        <a *ngIf="item.page !== ''">{{item.page}}</a>
+        <span *ngIf="item.page === ''">&nbsp;&nbsp;...&nbsp;&nbsp;</span>
+      </li> -->
+      <li>&gt;</li>
+    </ul>
+    <div class="page-go">
+      到第 <input type="text"> 页
+      <button type="button">确定</button>
+    </div>
+  </div>
+</div>

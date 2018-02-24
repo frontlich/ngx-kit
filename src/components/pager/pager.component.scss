@@ -1,0 +1,32 @@
+.page{
+  position: relative;
+
+  .page-size{
+    >a{
+      cursor: pointer;
+
+      &.active{
+        color: #57b9f8;
+      }
+    }
+  }
+
+  .page-center{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    ul.pagination{
+      display: inline-block;
+
+      >li{
+        display: inline-block;
+      }
+    }
+
+    .page-go{
+      display: inline-block;
+    }
+  }
+}

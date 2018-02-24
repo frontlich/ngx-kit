@@ -117,7 +117,7 @@ export class DragDirective implements OnInit {
   }
 
   constructor(private el: ElementRef, @Optional() @Inject(DRAG_CONFIG_TOKEN) _config: DragConfig) {
-    Object.assign(this, _config ? _config : {});
+    Object.assign(this, _config || {});
     this.ele = this.el.nativeElement;
   }
 
