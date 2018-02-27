@@ -9,7 +9,8 @@ import {
   APP_COMPONENTS,
   BreadCrumbComponent, SwitcherComponent, TabComponent,
   PagerComponent,
-  AutoHeightComponent, DragComponent, TrimComponent
+  AutoHeightComponent, DragComponent, TrimComponent,
+  FactoryPipeComponent, NumToChinesePipeComponent, FileSizePipeComponent
 } from './components';
 
 const APP_ROUTES: Routes = [
@@ -29,6 +30,14 @@ const APP_ROUTES: Routes = [
       { path: 'autoheight', component: AutoHeightComponent },
       { path: 'drag', component: DragComponent },
       { path: 'trim', component: TrimComponent }
+    ]
+  },
+  {
+    path: 'pipes',
+    children: [
+      { path: 'factory', component: FactoryPipeComponent },
+      { path: 'numToChinese', component: NumToChinesePipeComponent },
+      { path: 'fileSize', component: FileSizePipeComponent }
     ]
   }
 ];

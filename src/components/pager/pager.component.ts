@@ -45,6 +45,7 @@ export class PagerComponent implements OnInit {
   changePageSize(n: number) {
     console.log(n)
     this.data.pageSize = n;
+    this.onDataChange.emit(this.data);
   }
 
 }

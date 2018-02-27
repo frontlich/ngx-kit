@@ -7,6 +7,10 @@ import { AutoHeightComponent } from './directives/autoheight/autoheight.componen
 import { DragComponent } from './directives/drag/drag.component';
 import { TrimComponent } from './directives/trim/trim.component';
 
+import { FactoryPipeComponent } from './pipes/factory/factory.component';
+import { NumToChinesePipeComponent } from './pipes/numToChinese/numToChinese.component';
+import { FileSizePipeComponent } from './pipes/fileSize/fileSize.component';
+
 export {
   BreadCrumbComponent,
   SwitcherComponent,
@@ -14,7 +18,10 @@ export {
   PagerComponent,
   AutoHeightComponent,
   DragComponent,
-  TrimComponent
+  TrimComponent,
+  FactoryPipeComponent,
+  NumToChinesePipeComponent,
+  FileSizePipeComponent
 }
 
 export const APP_COMPONENTS = [
@@ -24,5 +31,8 @@ export const APP_COMPONENTS = [
   PagerComponent,
   AutoHeightComponent,
   DragComponent,
-  TrimComponent
+  TrimComponent,
+  FactoryPipeComponent,
+  NumToChinesePipeComponent,
+  FileSizePipeComponent
 ]
