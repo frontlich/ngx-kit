@@ -1,22 +1,22 @@
-import { Directive, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
+import { Directive, Input, Output, EventEmitter, HostListener, ElementRef, OnDestroy } from '@angular/core';
 
 @Directive({
-  selector: '[tabIndex]'
+  selector: '[nkTabIndex]'
 })
-export class TabIndexDirective {
+export class TabIndexDirective implements OnDestroy {
 
-  @Output() onChoose = new EventEmitter();
+  @Output() choose = new EventEmitter();
 
-  @Input('tabIndex') tabId: string;
+  @Input('nkTabIndex') tabId: string;
 
   @HostListener('click') clickEvent() {
-    this.onChoose.emit(this.tabId);
+    this.choose.emit(this.tabId);
   }
 
   constructor(private ref: ElementRef) { }
 
-  ngOnDestory() {
-    this.onChoose.unsubscribe();
+  ngOnDestroy() {
+    this.choose.unsubscribe();
   }
 
   addClass(v: string) {

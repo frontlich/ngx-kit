@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, QueryList, ContentChildren } from '@angular/core';
+import { Component, Input, Output, EventEmitter, QueryList, ContentChildren, AfterContentInit, AfterContentChecked } from '@angular/core';
 
 import { TabIndexDirective } from './tab-index.directive';
 import { TabContentDirective } from './tab-content.directive';
@@ -7,7 +7,7 @@ import { TabContentDirective } from './tab-content.directive';
   selector: 'nk-tab',
   template: '<ng-content></ng-content>'
 })
-export class TabComponent {
+export class TabComponent implements AfterContentInit, AfterContentChecked {
 
   length: number;
 
@@ -20,22 +20,22 @@ export class TabComponent {
   @ContentChildren(TabContentDirective) contentList: QueryList<TabContentDirective>;
 
   /** tab切换时的事件，返回tabIndex值  */
-  @Output() onTab = new EventEmitter();
+  @Output() changeTab = new EventEmitter();
 
-  constructor() {}
+  constructor() { }
 
   tabInit() {
-    let indexList = this.indexList.filter(item => this.tabActiveIndex === item.tabId),
-        contentList = this.contentList.filter(item => item.tabContentId === this.tabActiveIndex);
+    const indexList = this.indexList.filter(item => this.tabActiveIndex === item.tabId),
+      contentList = this.contentList.filter(item => item.tabContentId === this.tabActiveIndex);
 
-    if(!this.tabActiveIndex || !indexList.length){
+    if (!this.tabActiveIndex || !indexList.length) {
 
-      if(!this.indexList.first || !this.contentList.first){return};
+      if (!this.indexList.first || !this.contentList.first) { return; }
 
       this.indexList.first.addClass(this.tabActiveClass);
       this.contentList.first.show();
 
-    }else{
+    } else {
 
       indexList.forEach(item => item.addClass(this.tabActiveClass));
       contentList.forEach(item => item.show());
@@ -47,41 +47,41 @@ export class TabComponent {
 
     this.indexList.forEach(item => {
 
-      item.onChoose.subscribe((v: string) => {
+      item.choose.subscribe((v: string) => {
         this.tabActiveIndex = v;
-        this.onTab.emit(v);
+        this.changeTab.emit(v);
 
-        this.indexList.forEach(item => {
-          item.removeClass(this.tabActiveClass);
+        this.indexList.forEach(index => {
+          index.removeClass(this.tabActiveClass);
 
-          if(this.tabActiveIndex === item.tabId){
-            item.addClass(this.tabActiveClass);
+          if (this.tabActiveIndex === index.tabId) {
+            index.addClass(this.tabActiveClass);
           }
 
-        })
-        this.contentList.filter(item => {
-          item.hide();
-          return item.tabContentId === this.tabActiveIndex
-        }).forEach(item => {
-          item.show();
-        })
-        
-      })
+        });
+        this.contentList.filter(cont => {
+          cont.hide();
+          return cont.tabContentId === this.tabActiveIndex;
+        }).forEach(cont => {
+          cont.show();
+        });
+
+      });
     });
 
   }
 
   ngAfterContentInit() {
-    
+
     this.tabInit();
 
     this.contentInit();
   }
 
   ngAfterContentChecked() {
-    if(this.length !== this.indexList.length){
+    if (this.length !== this.indexList.length) {
 
-      if(this.length > this.indexList.length){
+      if (this.length > this.indexList.length) {
         this.tabInit();
       }
 

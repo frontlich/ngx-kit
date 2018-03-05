@@ -5,7 +5,7 @@ import { NgModel, FormControlName } from '@angular/forms';
  * trim指令：去除文本框或文本域输入内容的空格
  */
 @Directive({
-  selector: 'input[type=text][nk-trim],textarea[nk-trim]'
+  selector: 'input[type=text][nkTrim],textarea[nkTrim]'
 })
 export class TrimDirective {
 

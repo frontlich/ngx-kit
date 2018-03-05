@@ -1,11 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 
 import { Pager } from 'ngx-kit';
 
 @Component({
   templateUrl: './pager.component.html'
 })
-export class PagerComponent implements OnInit { 
+export class PagerComponent implements OnInit {
   pager: Pager = new Pager();
 
   ngOnInit() {
@@ -13,7 +13,7 @@ export class PagerComponent implements OnInit {
       total: 345,
       pageNo: 1,
       pageSize: 10
-    })
+    });
 
     setTimeout(() => {
       this.pager.total = 70;
@@ -24,7 +24,7 @@ export class PagerComponent implements OnInit {
       this.pager.set({
         total: 600,
         pageNo: 1
-      })
+      });
     }, 3000);
   }
 }

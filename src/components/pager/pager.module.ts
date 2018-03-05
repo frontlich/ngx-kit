@@ -11,7 +11,7 @@ import { PAGER_CONFIG_TOKEN, PagerConfig } from './pager.config';
   exports: [PagerComponent]
 })
 export class PagerModule {
-  static forRoot(config?: PagerConfig): ModuleWithProviders {
+  static set(config?: PagerConfig): ModuleWithProviders {
     return {
       ngModule: PagerModule,
       providers: [

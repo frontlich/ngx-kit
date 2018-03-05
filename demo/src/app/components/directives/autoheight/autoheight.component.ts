@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
   templateUrl: './autoheight.component.html'
 })
-export class AutoHeightComponent {}
+export class AutoHeightComponent { }

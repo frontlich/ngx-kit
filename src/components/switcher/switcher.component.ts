@@ -1,5 +1,5 @@
-import { Component, Input, forwardRef } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { Component, Input, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
  * 开关组件
@@ -67,7 +67,7 @@ export class SwitcherComponent implements ControlValueAccessor {
     this.isOpen = v === this.checked;
   }
 
-  registerOnChange(fn: (_:any) => {}) {
+  registerOnChange(fn: (_: any) => {}) {
     this.onChange = fn;
   }
 

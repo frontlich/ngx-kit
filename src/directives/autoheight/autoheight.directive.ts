@@ -1,9 +1,9 @@
-import { ElementRef, HostListener, Directive } from '@angular/core';
+import { ElementRef, HostListener, Directive, AfterViewChecked } from '@angular/core';
 
 @Directive({
-  selector: 'textarea[nk-autoheight]'
+  selector: 'textarea[nkAutoheight]'
 })
-export class AutoheightDirective {
+export class AutoheightDirective implements AfterViewChecked {
   private ele: HTMLTextAreaElement;
   private _height: number;
   private _val: string;
@@ -28,12 +28,12 @@ export class AutoheightDirective {
   }
 
   adjust() {
-    if (!this.ele) { return };
+    if (!this.ele) { return; }
 
-    this.ele.style.height = '0';//重置height, scrollHeight
+    this.ele.style.height = '0'; // 重置height, scrollHeight
 
-    let tHeight = this.ele.scrollHeight;
+    const tHeight = this.ele.scrollHeight;
     this._height = tHeight;
-    this.ele.style.height = tHeight + "px";
+    this.ele.style.height = tHeight + 'px';
   }
 }

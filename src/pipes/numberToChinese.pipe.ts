@@ -17,19 +17,19 @@ export class NumToChinesePipe implements PipeTransform {
   /**转换整数*/
   transformInt(num: string): string {
 
-    if (num.length > 16) { return '数字过大' };
+    if (num.length > 16) { return '数字过大'; }
 
-    let zero = this.expression === '一' ? '〇' : '零';
+    const zero = this.expression === '一' ? '〇' : '零';
 
-    //获取四位数的中文字符
-    let getStr = (n: string) => {
-      let _arr = n.split('');
+    // 获取四位数的中文字符
+    const getStr = (n: string) => {
+      const _arr = n.split('');
 
-      while (_arr.length < 4) {//凑四位数，不然导致单位错误
+      while (_arr.length < 4) { // 凑四位数，不然导致单位错误
         _arr.unshift('0');
       }
 
-      let newArr = new Array();
+      const newArr = new Array();
       let noZero = true;
 
       for (let i = 0; i < _arr.length; i++) {
@@ -44,16 +44,16 @@ export class NumToChinesePipe implements PipeTransform {
         }
       }
 
-      //去掉末尾零
+      // 去掉末尾零
       let four_str = newArr.join('');
       while (four_str.slice(-1) === zero) {
         four_str = four_str.slice(0, -1);
       }
 
-      return four_str;//返回四位数字中文字符
+      return four_str; // 返回四位数字中文字符
     };
 
-    let numArr = [num.slice(-16, -12), num.slice(-12, -8), num.slice(-8, -4), num.slice(-4)],
+    const numArr = [num.slice(-16, -12), num.slice(-12, -8), num.slice(-8, -4), num.slice(-4)],
       unitArr = ['兆', '亿', '万', ''];
 
     let chinese_num_up = '';
@@ -63,7 +63,7 @@ export class NumToChinesePipe implements PipeTransform {
       }
     });
 
-    //去掉首位零
+    // 去掉首位零
     while (chinese_num_up.charAt(0) === zero) {
       chinese_num_up = chinese_num_up.slice(1);
     }
@@ -71,21 +71,21 @@ export class NumToChinesePipe implements PipeTransform {
     return !chinese_num_up ? zero : chinese_num_up;
   }
 
-  /**转换小数*/
+  /** 转换小数 */
   transformFloat(num: string): string {
     return num.split('').map(i => this.CHINESE_NUM_ARR[Number(i)]).join('');
   }
 
   transform(value: number | string, expression: string = '一'): string {
-    let num = Number(value);
+    const num = Number(value);
 
-    if (isNaN(num)) { return 'NaN' }
+    if (isNaN(num)) { return 'NaN'; }
 
     this.expression = expression;
     this.CHINESE_NUM_ARR = expression === '壹' ? this.CHINESE_NUM_UP : this.CHINESE_NUM_LOW;
     this.UNIT_ARR = expression === '壹' ? this.UNIT_UP : this.UNIT_LOW;
 
-    let [_int = '0', _float = ''] = Math.abs(num).toString().split('.');
+    const [_int = '0', _float = ''] = Math.abs(num).toString().split('.');
 
     return (num < 0 ? '负' : '') + this.transformInt(_int) + (!_float ? '' : '点') + this.transformFloat(_float);
   }

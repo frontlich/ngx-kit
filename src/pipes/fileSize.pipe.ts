@@ -8,10 +8,10 @@ export class FileSizePipe implements PipeTransform {
     value = Number(value);
 
     if (isNaN(value)) {
-      return 'NaN'; 
-    };
+      return 'NaN';
+    }
 
-    let arr = ['b', 'Kb', 'Mb', 'Gb', 'Tb'];
+    const arr = ['b', 'Kb', 'Mb', 'Gb', 'Tb'];
     let num: number;
     let i = -1;
 

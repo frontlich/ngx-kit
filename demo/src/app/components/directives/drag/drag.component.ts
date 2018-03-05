@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
   templateUrl: './drag.component.html'
 })
-export class DragComponent {}
+export class DragComponent { }

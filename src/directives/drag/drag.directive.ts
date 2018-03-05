@@ -1,6 +1,6 @@
 import { Directive, Inject, Optional, OnInit, Input, Output, HostListener, ElementRef, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription'
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/timer';
 
 import { DRAG_CONFIG_TOKEN, DragConfig } from './drag.config';
@@ -13,14 +13,14 @@ import { DRAG_CONFIG_TOKEN, DragConfig } from './drag.config';
  * dragY：沿Y轴拖拽
  */
 @Directive({
-  selector: '[nk-drag],[nk-dragX],[nk-dragY]'
+  selector: '[nkDrag],[nkDragX],[nkDragY]'
 })
 export class DragDirective implements OnInit {
   private ele: any;
   private dragSub: Subscription = new Subscription();
   private _canDrag: boolean = false;
-  private startX: number;//起始位置x
-  private startY: number;//起始位置y
+  private startX: number; // 起始位置x
+  private startY: number; // 起始位置y
   private _zIndex: number;
   private _transition: string;
 
@@ -32,9 +32,9 @@ export class DragDirective implements OnInit {
   @Input() maxZIndex: number = 9999;
   /** 拖拽时是否阻止元素上的点击事件，默认阻止 */
   @Input() stopClickEvent: boolean = true;
-  @Input('nk-drag') private drag: boolean = true;
-  @Input('nk-dragX') private dragX: boolean = true;
-  @Input('nk-dragY') private dragY: boolean = true;
+  @Input() private nkDrag: boolean = true;
+  @Input() private nkDragX: boolean = true;
+  @Input() private nkDragY: boolean = true;
 
   @Output() dragStart = new EventEmitter<{ dom: HTMLElement, left: number, top: number }>();
   @Output() dragMove = new EventEmitter<{ dom: HTMLElement, left: number, top: number }>();
@@ -49,19 +49,19 @@ export class DragDirective implements OnInit {
 
   @HostListener('mousedown', ['$event'])
   moveStart(e: MouseEvent) {
-    if (!this.canDrag) { return }
+    if (!this.canDrag) { return; }
     this.dragSub = Observable.timer(this.delay).subscribe(() => {
       this._canDrag = true;
-      if (!this.drag || !this.dragY) {
+      if (!this.nkDrag || !this.nkDragY) {
         this.startY = e.clientY - this.ele.offsetTop;
       }
-      if (!this.drag || !this.dragX) {
+      if (!this.nkDrag || !this.nkDragX) {
         this.startX = e.clientX - this.ele.offsetLeft;
       }
       this.ele.style.zIndex = this.maxZIndex;
       this.ele.style.transition = 'none';
       this.dragStart.emit({ dom: this.ele, left: this.ele.offsetLeft, top: this.ele.offsetTop });
-    })
+    });
   }
 
   @HostListener('mousemove', ['$event'])
@@ -86,10 +86,10 @@ export class DragDirective implements OnInit {
       left = this.ele.offsetParent.offsetWidth - this.ele.offsetWidth;
     }
 
-    if (!this.drag || !this.dragX) {
+    if (!this.nkDrag || !this.nkDragX) {
       this.ele.style.left = left + 'px';
     }
-    if (!this.drag || !this.dragY) {
+    if (!this.nkDrag || !this.nkDragY) {
       this.ele.style.top = top + 'px';
     }
     this.dragMove.emit({ dom: this.ele, left: left, top: top });
@@ -103,7 +103,7 @@ export class DragDirective implements OnInit {
 
   @HostListener('mouseout')
   moveOut() {
-    this.reset()
+    this.reset();
   }
 
   reset() {

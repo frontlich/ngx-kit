@@ -22,7 +22,7 @@ export {
   FactoryPipeComponent,
   NumToChinesePipeComponent,
   FileSizePipeComponent
-}
+};
 
 export const APP_COMPONENTS = [
   BreadCrumbComponent,
@@ -35,4 +35,4 @@ export const APP_COMPONENTS = [
   FactoryPipeComponent,
   NumToChinesePipeComponent,
   FileSizePipeComponent
-]
+];

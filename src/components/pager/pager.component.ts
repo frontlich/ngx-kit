@@ -22,7 +22,7 @@ export class Pager {
 
   pagerSubject: Subject<any> = new Subject();
 
-  private _total: number = 0;//数据总数
+  private _total: number = 0; // 数据总数
   set total(v: number) {
     this._total = v;
     this.pagerSubject.next();
@@ -31,7 +31,7 @@ export class Pager {
     return this._total;
   }
 
-  private _pageNo: number = 1;//当前页码
+  private _pageNo: number = 1; // 当前页码
   set pageNo(v: number) {
     this._pageNo = v;
     this.pagerSubject.next();
@@ -40,7 +40,7 @@ export class Pager {
     return this._pageNo;
   }
 
-  private _pageSize: number = 10;//每页数量
+  private _pageSize: number = 10; // 每页数量
   set pageSize(v: number) {
     this._pageSize = v;
     this.pagerSubject.next();
@@ -62,7 +62,7 @@ export class Pager {
         if (k[key] !== this[key]) {
           this[key] = k[key];
         }
-      })
+      });
     }
   }
 }
@@ -86,8 +86,8 @@ export class PagerComponent implements OnInit, OnDestroy {
 
   @Input() data: Pager = new Pager();
 
-  @Output() onChange = new EventEmitter<PagerData>();
-  @Output() onError = new EventEmitter<string>();
+  @Output() pageChange = new EventEmitter<PagerData>();
+  @Output() pageError = new EventEmitter<string>();
 
   constructor(@Optional() @Inject(PAGER_CONFIG_TOKEN) _config: PagerConfig) {
     Object.assign(this, _config || {});
@@ -135,27 +135,27 @@ export class PagerComponent implements OnInit, OnDestroy {
   changePageNo(v: number) {
     if (typeof v !== 'number' || this.pagerData.pageNo === v) {
       return;
-    };
+    }
     this.pagerData.pageNo = v;
     this.getPagination();
-    this.onChange.emit(this.pagerData);
+    this.pageChange.emit(this.pagerData);
   }
 
   changePageNoTo(add: number, pNo?: number) {
     pNo = Number(pNo) || this.pagerData.pageNo + add;
     if (pNo < 1 || pNo > this.totalPages) {
-      this.onError.emit('页码超出范围了');
+      this.pageError.emit('页码超出范围了');
       return;
-    };
+    }
     this.changePageNo(pNo);
   }
 
   changePageSize(v: number) {
-    if (this.pagerData.pageSize === v) { return };
+    if (this.pagerData.pageSize === v) { return; }
     this.pagerData.pageSize = v;
     this.pagerData.pageNo = 1;
     this.getPagination();
-    this.onChange.emit(this.pagerData);
+    this.pageChange.emit(this.pagerData);
   }
 
   ngOnDestroy() {

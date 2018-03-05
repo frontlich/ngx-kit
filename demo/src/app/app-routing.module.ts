@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-//import { NgxKitModule } from "ngx-kit";
+// import { NgxKitModule } from "ngx-kit";
 import { NgxKitModule } from '../../../src/index';
 
 import {

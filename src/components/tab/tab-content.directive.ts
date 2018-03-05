@@ -1,13 +1,13 @@
 import { Directive, OnInit, Input, HostListener, ElementRef } from '@angular/core';
 
 @Directive({
-  selector: '[tabContent]'
+  selector: '[nkTabContent]'
 })
 export class TabContentDirective implements OnInit {
 
   private _display: string;
 
-  @Input('tabContent') tabContentId: string;
+  @Input('nkTabContent') tabContentId: string;
 
   constructor(private ref: ElementRef) { }
 

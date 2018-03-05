@@ -35,7 +35,7 @@ export interface BreadCrumbItem {
   `]
 })
 export class BreadCrumbComponent implements OnInit {
-  
+
   list: Array<BreadCrumbItem> = [];
 
   /** 设置头部的面包屑  */
@@ -57,20 +57,20 @@ export class BreadCrumbComponent implements OnInit {
         return {
           label: item.data['breadcrumb'],
           url: urlStr
-        }
-      })
-    
+        };
+      });
+
       this.list = [...this.headCrumbs, ...routeList];
   }
 
   ngOnInit() {
 
     this.initBreadCrumb(this.activedRoute.snapshot.pathFromRoot);
-    
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.initBreadCrumb(this.activedRoute.snapshot.pathFromRoot)
+        this.initBreadCrumb(this.activedRoute.snapshot.pathFromRoot);
       }
-    })
+    });
   }
 }

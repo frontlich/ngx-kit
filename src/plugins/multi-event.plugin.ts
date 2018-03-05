@@ -1,5 +1,8 @@
-import { Injectable, Inject } from '@angular/core';
-import { EventManager, DOCUMENT, EVENT_MANAGER_PLUGINS, ɵd as EventManagerPlugin } from '@angular/platform-browser';
+import { Injectable, Inject, InjectionToken } from '@angular/core';
+import { DOCUMENT as commonDOCUMENT } from '@angular/common';
+import { EventManager, EVENT_MANAGER_PLUGINS, ɵd as EventManagerPlugin } from '@angular/platform-browser';
+
+const DOCUMENT = commonDOCUMENT;
 
 /**
  * Support Multi Event
@@ -11,8 +14,7 @@ export class MultiEventPlugin extends EventManagerPlugin {
   constructor(@Inject(DOCUMENT) doc: any) { super(doc); }
 
   getMultiEventArray(eventName: string): string[] {
-    return eventName.split(",")   // click,mouseover => [click,mouseover]
-      .filter((item, index): boolean => { return item && item != '' })
+    return eventName.toLocaleLowerCase().split(',').filter(item => !!item); // click,mouseover => [click,mouseover]
   }
 
   supports(eventName: string): boolean {
@@ -20,16 +22,16 @@ export class MultiEventPlugin extends EventManagerPlugin {
   }
 
   addEventListener(element: HTMLElement, eventName: string, handler: Function): Function {
-    let zone = this.manager.getZone();
-    let eventsArray = this.getMultiEventArray(eventName);
+    const zone = this.manager.getZone();
+    const eventsArray = this.getMultiEventArray(eventName);
 
     // Entering back into angular to trigger changeDetection
-    let outsideHandler = (event: any) => {
+    const outsideHandler = (event: any) => {
       zone.runGuarded(() => handler(event));
     };
 
     return this.manager.getZone().runOutsideAngular(() => {
-      let off: Function[] = eventsArray.map(eventName => this.manager.addEventListener(element, eventName, outsideHandler));
+      const off: Function[] = eventsArray.map(eName => this.manager.addEventListener(element, eName, outsideHandler));
 
       return () => {
         off.forEach(evt => evt());
@@ -42,4 +44,4 @@ export const MultiEventPluginProvider = {
   provide: EVENT_MANAGER_PLUGINS,
   useClass: MultiEventPlugin,
   multi: true
-}
+};
