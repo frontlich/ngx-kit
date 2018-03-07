@@ -1,4 +1,7 @@
-import { Component, Input, Output, EventEmitter, QueryList, ContentChildren, AfterContentInit, AfterContentChecked, OnDestroy } from '@angular/core';
+import {
+  Component, Input, Output, EventEmitter, QueryList,
+  ContentChildren, AfterContentInit, AfterContentChecked, OnDestroy
+} from '@angular/core';
 
 import { TabIndexDirective } from './tab-index.directive';
 import { TabContentDirective } from './tab-content.directive';
@@ -92,7 +95,7 @@ export class TabComponent implements AfterContentInit, AfterContentChecked, OnDe
   ngOnDestroy() {
     this.indexList.forEach(item => {
       item.choose.unsubscribe();
-    })
+    });
   }
 
 }

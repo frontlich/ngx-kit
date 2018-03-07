@@ -69,8 +69,80 @@ export class Pager {
 
 @Component({
   selector: 'nk-pager',
-  templateUrl: './pager.component.html',
-  styleUrls: ['./pager.component.scss']
+  template: `
+  <div class="page">
+    <div class="page-size" *ngIf="!simpleModel">
+      显示：
+      <a [class.active]="pagerData.pageSize === 10" (click)="changePageSize(10)">10</a>
+      <a [class.active]="pagerData.pageSize === 20" (click)="changePageSize(20)">20</a>
+      <a [class.active]="pagerData.pageSize === 50" (click)="changePageSize(50)">50</a>
+      条/页
+      <span style="margin-left: 15px;">共{{pagerData.total}}条</span>
+    </div>
+    <div class="page-center">
+      <ul class="pagination">
+        <li class="page-change" (click)="changePageNoTo(-1)" [class.forbidden]="pagerData.pageNo === 1">&lt;</li>
+        <li *ngFor="let item of pageNumList" (click)="changePageNo(item)"
+          [class.active]="pagerData.pageNo === item"
+          [style.cursor]="item === '...' ? 'default' : 'pointer'">{{item}}</li>
+        <li class="page-change" (click)="changePageNoTo(1)" [class.forbidden]="pagerData.pageNo === totalPages">&gt;</li>
+      </ul>
+      <div class="page-go" *ngIf="!simpleModel">
+        到第 <input type="text" #pageNo (keyup.enter)="changePageNoTo(0, pageNo.value);pageNo.value='';"> 页
+        <button type="button" (click)="changePageNoTo(0, pageNo.value);pageNo.value='';">go</button>
+      </div>
+    </div>
+  </div>
+  `,
+  styles: [
+    `
+    .page {
+      position: relative;
+      user-select: none;
+      line-height: 25px; }
+    .page .page-size > a {
+      cursor: pointer; }
+      .page .page-size > a.active {
+        color: #57b9f8; }
+    .page .page-center {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%); }
+    .page .page-center ul.pagination {
+      display: inline-block; }
+    .page .page-center ul.pagination > li {
+      display: inline-block;
+      padding: 0 5px;
+      min-width: 25px;
+      text-align: center; }
+    .page .page-center ul.pagination > li.active {
+      color: #fff;
+      background: #57b9f8; }
+    .page .page-center ul.pagination > li.page-change {
+      cursor: pointer; }
+    .page .page-center ul.pagination > li.forbidden {
+      color: #ccc;
+      cursor: not-allowed; }
+    .page .page-center .page-go {
+      display: inline-block;
+      margin-left: 30px; }
+    .page .page-center .page-go > input {
+      padding: 0 5px;
+      width: 20px;
+      height: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px; }
+    .page .page-center .page-go > button {
+      color: #4a4a4a;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      outline: none; }
+    .page .page-center .page-go > button:hover {
+      color: #57b9f8; }
+    `
+  ]
 })
 export class PagerComponent implements OnInit, OnDestroy {
 

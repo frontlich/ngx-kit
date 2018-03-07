@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 
 export interface BreadCrumbItem {
   label: string;
@@ -42,7 +42,7 @@ export class BreadCrumbComponent implements OnInit, OnDestroy {
   list: Array<BreadCrumbItem> = [];
 
   /** 设置头部的面包屑  */
-  @Input() headCrumbs: Array<BreadCrumbItem> = [{label: '首页', url: '/'}];
+  @Input() headCrumbs: Array<BreadCrumbItem> = [{ label: '首页', url: '/' }];
   /** 设置分隔符  */
   @Input() seq: string = '\\';
 
@@ -52,16 +52,16 @@ export class BreadCrumbComponent implements OnInit, OnDestroy {
 
   initBreadCrumb(snapshot: ActivatedRouteSnapshot, path: string = '') {
 
-    if(snapshot.url.length) {
+    if (snapshot.url.length) {
       path += '/' + snapshot.url.map(item => item.path).join('/');
     }
 
     const breadcrumbLabel = snapshot.data['breadcrumb'];
-    if(breadcrumbLabel && breadcrumbLabel !== this.list[this.list.length - 1].label) {
-      this.list.push({label: breadcrumbLabel, url: path});
+    if (breadcrumbLabel && breadcrumbLabel !== this.list[this.list.length - 1].label) {
+      this.list.push({ label: breadcrumbLabel, url: path });
     }
 
-    if(snapshot.firstChild) {
+    if (snapshot.firstChild) {
       this.initBreadCrumb(snapshot.firstChild, path);
     }
   }
@@ -69,7 +69,7 @@ export class BreadCrumbComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.list = [...this.headCrumbs];
     this.initBreadCrumb(this.activedRoute.snapshot.pathFromRoot[0]);
-    
+
     this.suber = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.list = [...this.headCrumbs];
