@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, QueryList, ContentChildren, AfterContentInit, AfterContentChecked } from '@angular/core';
+import { Component, Input, Output, EventEmitter, QueryList, ContentChildren, AfterContentInit, AfterContentChecked, OnDestroy } from '@angular/core';
 
 import { TabIndexDirective } from './tab-index.directive';
 import { TabContentDirective } from './tab-content.directive';
@@ -7,7 +7,7 @@ import { TabContentDirective } from './tab-content.directive';
   selector: 'nk-tab',
   template: '<ng-content></ng-content>'
 })
-export class TabComponent implements AfterContentInit, AfterContentChecked {
+export class TabComponent implements AfterContentInit, AfterContentChecked, OnDestroy {
 
   length: number;
 
@@ -87,6 +87,12 @@ export class TabComponent implements AfterContentInit, AfterContentChecked {
 
       this.contentInit();
     }
+  }
+
+  ngOnDestroy() {
+    this.indexList.forEach(item => {
+      item.choose.unsubscribe();
+    })
   }
 
 }

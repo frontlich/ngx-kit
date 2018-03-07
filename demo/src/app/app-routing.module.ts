@@ -19,32 +19,34 @@ const APP_ROUTES: Routes = [
     data: { breadcrumb: '组件' },
     children: [
       { path: 'breadcrumb', data: { breadcrumb: '面包屑导航' }, component: BreadCrumbComponent },
-      { path: 'switcher', component: SwitcherComponent },
-      { path: 'tab', component: TabComponent },
-      { path: 'pager', component: PagerComponent }
+      { path: 'switcher', data: { breadcrumb: '开关' }, component: SwitcherComponent },
+      { path: 'tab', data: { breadcrumb: 'tab页切换' }, component: TabComponent },
+      { path: 'pager', data: { breadcrumb: '分页器' }, component: PagerComponent }
     ]
   },
   {
     path: 'directives',
+    data: { breadcrumb: '指令' },
     children: [
-      { path: 'autoheight', component: AutoHeightComponent },
-      { path: 'drag', component: DragComponent },
-      { path: 'trim', component: TrimComponent }
+      { path: 'autoheight', data: { breadcrumb: '自动高度' }, component: AutoHeightComponent },
+      { path: 'drag', data: { breadcrumb: '拖拽' }, component: DragComponent },
+      { path: 'trim', data: { breadcrumb: '去除空白符' }, component: TrimComponent }
     ]
   },
   {
     path: 'pipes',
+    data: { breadcrumb: '管道' },
     children: [
-      { path: 'factory', component: FactoryPipeComponent },
-      { path: 'numToChinese', component: NumToChinesePipeComponent },
-      { path: 'fileSize', component: FileSizePipeComponent }
+      { path: 'factory', data: { breadcrumb: '工厂管道' }, component: FactoryPipeComponent },
+      { path: 'numToChinese', data: { breadcrumb: '数字转中文' }, component: NumToChinesePipeComponent },
+      { path: 'fileSize', data: { breadcrumb: '文件大小' }, component: FileSizePipeComponent }
     ]
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(APP_ROUTES), FormsModule, NgxKitModule],
-  exports: [RouterModule],
+  exports: [RouterModule, NgxKitModule],
   declarations: APP_COMPONENTS
 })
 export class AppRoutingModule { }

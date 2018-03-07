@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 export interface BreadCrumbItem {
   label: string;
@@ -34,7 +35,9 @@ export interface BreadCrumbItem {
   }
   `]
 })
-export class BreadCrumbComponent implements OnInit {
+export class BreadCrumbComponent implements OnInit, OnDestroy {
+
+  private suber: Subscription;
 
   list: Array<BreadCrumbItem> = [];
 
@@ -47,30 +50,35 @@ export class BreadCrumbComponent implements OnInit {
     private router: Router,
     private activedRoute: ActivatedRoute) { }
 
-  initBreadCrumb(pathFromRoot: Array<ActivatedRouteSnapshot>) {
-    let urlStr = '/';
+  initBreadCrumb(snapshot: ActivatedRouteSnapshot, path: string = '') {
 
-    const routeList = pathFromRoot
-      .filter(item => item.url.length)
-      .map(item => {
-        urlStr += '/' + item.url[0].path;
-        return {
-          label: item.data['breadcrumb'],
-          url: urlStr
-        };
-      });
+    if(snapshot.url.length) {
+      path += '/' + snapshot.url.map(item => item.path).join('/');
+    }
 
-      this.list = [...this.headCrumbs, ...routeList];
+    const breadcrumbLabel = snapshot.data['breadcrumb'];
+    if(breadcrumbLabel && breadcrumbLabel !== this.list[this.list.length - 1].label) {
+      this.list.push({label: breadcrumbLabel, url: path});
+    }
+
+    if(snapshot.firstChild) {
+      this.initBreadCrumb(snapshot.firstChild, path);
+    }
   }
 
   ngOnInit() {
-
-    this.initBreadCrumb(this.activedRoute.snapshot.pathFromRoot);
-
-    this.router.events.subscribe(event => {
+    this.list = [...this.headCrumbs];
+    this.initBreadCrumb(this.activedRoute.snapshot.pathFromRoot[0]);
+    
+    this.suber = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.initBreadCrumb(this.activedRoute.snapshot.pathFromRoot);
+        this.list = [...this.headCrumbs];
+        this.initBreadCrumb(this.activedRoute.snapshot);
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.suber.unsubscribe();
   }
 }
