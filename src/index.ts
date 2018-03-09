@@ -16,6 +16,10 @@ import { FileSizePipe } from './pipes/fileSize.pipe';
 export { MultiEventPlugin, MultiEventPluginProvider } from './plugins/multi-event.plugin';
 export { ControlEventPlugin, ControlEventPluginProvider } from './plugins/control-event.plugin';
 
+export { deepAssign } from './utils/deepAssign';
+export * from './utils/operator';
+export * from './utils/consecutiveArr';
+
 export {
   BreadCrumbModule, BreadCrumbComponent,
   SwitcherModule, SwitcherComponent,
@@ -31,7 +35,7 @@ export {
 
 const MODULES = [
   BreadCrumbModule, SwitcherModule, TabModule, PagerModule,
-  AutoHeightModule,  DragModule, TrimModule
+  AutoHeightModule, DragModule, TrimModule
 ];
 
 const PIPES = [
