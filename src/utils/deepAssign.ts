@@ -13,7 +13,7 @@ export const deepAssign = (...objArr: Object[]) => {
       if (typeof v1 === 'object' && typeof v2 === 'object') {
         tempObj[key] = assign(v1, v2);
       } else {
-        tempObj[key] = v2 || v1;
+        tempObj[key] = typeof v2 === 'undefined' ? v1 : v2;
       }
     });
 

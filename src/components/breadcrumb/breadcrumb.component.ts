@@ -10,9 +10,9 @@ export interface BreadCrumbItem {
 @Component({
   selector: 'nk-breadcrumb',
   template: `
-  <ul class="breadcrumb">
+  <ul class="crumb">
     <ng-container *ngFor="let item of list;index as i;">
-      <li class="breadcrumb-item" *ngIf="item.label" >
+      <li class="crumb-item" *ngIf="item.label" >
         <a [routerLink]="item.url">{{item.label}}</a>
         <span *ngIf="i !== list.length - 1">{{seq}}</span>
       </li>
@@ -20,16 +20,16 @@ export interface BreadCrumbItem {
   </ul>
   `,
   styles: [`
-  .breadcrumb{
+  .crumb{
     list-style: none;
   }
-  .breadcrumb>.breadcrumb-item{
+  .crumb>.crumb-item{
     display: inline-block;
   }
-  .breadcrumb>.breadcrumb-item>a,.breadcrumb>.breadcrumb-item>span{
+  .crumb>.crumb-item>a,.crumb>.crumb-item>span{
     color: #a8b1bd;
   }
-  .breadcrumb>.breadcrumb-item:last-child>a{
+  .crumb>.crumb-item:last-child>a{
     color: #4a4a4a;
     font-weight: bold;
   }
@@ -67,13 +67,15 @@ export class BreadCrumbComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const rootSnap = this.activedRoute.snapshot.pathFromRoot[0];
+    
     this.list = [...this.headCrumbs];
-    this.initBreadCrumb(this.activedRoute.snapshot.pathFromRoot[0]);
+    this.initBreadCrumb(rootSnap);
 
     this.suber = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.list = [...this.headCrumbs];
-        this.initBreadCrumb(this.activedRoute.snapshot);
+        this.initBreadCrumb(rootSnap);
       }
     });
   }
