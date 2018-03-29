@@ -4,6 +4,13 @@
     <a [class.active]="pagerData.pageSize === 10" (click)="changePageSize(10)">10</a>
     <a [class.active]="pagerData.pageSize === 20" (click)="changePageSize(20)">20</a>
     <a [class.active]="pagerData.pageSize === 50" (click)="changePageSize(50)">50</a>
+    <div *ngIf="customPageSize" class="page-size-custom">
+      <a [class.active]="customPageSizeActive" (click)="customPageSizeShow = !customPageSizeShow">{{pagerData.pageSize}}</a>
+      <div class="page-size-custom-input" [hidden]="!customPageSizeShow">
+        <input type="text" #pageSize (keyup.enter)="changePageSize(pageSize.value);pageSize.value='';">
+        <button type="button" (click)="changePageSize(pageSize.value);pageSize.value='';">确定</button>
+      </div>
+    </div>
     条/页
     <span style="margin-left: 15px;">共{{pagerData.total}}条</span>
   </div>

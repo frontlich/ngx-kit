@@ -8,7 +8,7 @@ import { NgxKitModule } from '../../../src/index';
 import {
   APP_COMPONENTS,
   BreadCrumbComponent, SwitcherComponent, TabComponent,
-  PagerComponent,
+  PagerComponent, DatepickerComponent,
   AutoHeightComponent, DragComponent, TrimComponent,
   FactoryPipeComponent, NumToChinesePipeComponent, FileSizePipeComponent
 } from './components';
@@ -21,7 +21,8 @@ const APP_ROUTES: Routes = [
       { path: 'breadcrumb', data: { breadcrumb: '面包屑导航' }, component: BreadCrumbComponent },
       { path: 'switcher', data: { breadcrumb: '开关' }, component: SwitcherComponent },
       { path: 'tab', data: { breadcrumb: 'tab页切换' }, component: TabComponent },
-      { path: 'pager', data: { breadcrumb: '分页器' }, component: PagerComponent }
+      { path: 'pager', data: { breadcrumb: '分页器' }, component: PagerComponent },
+      { path: 'datepicker', data: { breadcrumb: '日期组件'}, component: DatepickerComponent }
     ]
   },
   {

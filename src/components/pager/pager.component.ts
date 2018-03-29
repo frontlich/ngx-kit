@@ -69,7 +69,9 @@ export class Pager {
 
 @Component({
   selector: 'nk-pager',
-  template: `
+  templateUrl: './pager.component.html',
+  styleUrls: ['./pager.component.scss']
+  /* template: `
   <div class="page">
     <div class="page-size" *ngIf="!simpleModel">
       显示：
@@ -142,7 +144,7 @@ export class Pager {
     .page .page-center .page-go > button:hover {
       color: #57b9f8; }
     `
-  ]
+  ] */
 })
 export class PagerComponent implements OnInit, OnDestroy {
 
@@ -150,11 +152,15 @@ export class PagerComponent implements OnInit, OnDestroy {
   pagerData: PagerData;
   /** 分页符总数  */
   totalPages: number;
+  customPageSizeShow: boolean;
+  customPageSizeActive: boolean;
 
   /** @property 分页符长度 */
   @Input() paginationLength: number = 7;
   /** @property 极简模式  */
   @Input() simpleModel: boolean = false;
+  /** @property 是否能自定义pageSize大小 */
+  @Input() customPageSize: boolean = true;
 
   @Input() data: Pager = new Pager();
 
@@ -223,9 +229,22 @@ export class PagerComponent implements OnInit, OnDestroy {
   }
 
   changePageSize(v: number) {
+    v = Math.floor(Number(v));
+
+    this.customPageSizeShow = false;
+
+    if (isNaN(v) || v <= 0) {
+      this.pageError.emit('页码必须是正整数');
+      return;
+    }
+
     if (this.pagerData.pageSize === v) { return; }
+
+    this.customPageSizeActive = v !== 10 && v !== 20 && v !== 50;
+
     this.pagerData.pageSize = v;
     this.pagerData.pageNo = 1;
+
     this.getPagination();
     this.pageChange.emit(this.pagerData);
   }

@@ -4,6 +4,7 @@ import { BreadCrumbModule, BreadCrumbComponent } from './components/breadcrumb';
 import { SwitcherModule, SwitcherComponent } from './components/switcher';
 import { TabModule, TabComponent, TabIndexDirective, TabContentDirective } from './components/tab';
 import { PagerModule, Pager, PagerComponent } from './components/pager';
+import { DatepickerModule, DatepickerComponent } from './components/datapicker';
 
 import { AutoHeightModule, AutoheightDirective } from './directives/autoheight';
 import { DragModule, DragDirective } from './directives/drag';
@@ -25,6 +26,7 @@ export {
   SwitcherModule, SwitcherComponent,
   TabModule, TabComponent, TabIndexDirective, TabContentDirective,
   PagerModule, Pager, PagerComponent,
+  DatepickerModule, DatepickerComponent,
 
   AutoHeightModule, AutoheightDirective,
   DragModule, DragDirective,
@@ -34,7 +36,7 @@ export {
 };
 
 const MODULES = [
-  BreadCrumbModule, SwitcherModule, TabModule, PagerModule,
+  BreadCrumbModule, SwitcherModule, TabModule, PagerModule, DatepickerModule,
   AutoHeightModule, DragModule, TrimModule
 ];
 

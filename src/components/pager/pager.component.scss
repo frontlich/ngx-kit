@@ -3,6 +3,31 @@
   user-select: none;
   line-height: 25px;
 
+  input{
+    padding: 0 5px;
+    vertical-align: middle;
+    width: 25px;
+    height: 20px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+  }
+
+  button{
+    vertical-align: middle;
+    font-size: 14px;
+    color: #4a4a4a;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+
+    &:hover{
+      color: #57b9f8;
+    }
+  }
+
   .page-size{
     >a{
       color: #4a4a4a;
@@ -10,6 +35,42 @@
 
       &.active{
         color: #57b9f8;
+      }
+    }
+
+    .page-size-custom{
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      
+      > a {
+        display: inline-block;
+        padding: 0 5px;
+        line-height: 23px;
+        border-width: 1px;
+        border-style: dashed;
+        border-color: #ccc;
+        
+        &.active {
+          border-color: #57b9f8;
+          color: #57b9f8;
+        }
+      }
+
+
+      >.page-size-custom-input {
+        position: absolute;
+        top: -25px;
+        left: -50%;
+        width: 80px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+
+        > input[type=text], button {
+          float: left;
+          border: none;
+          border-radius: 0;
+        }
       }
     }
   }
@@ -22,6 +83,7 @@
     
     ul.pagination{
       display: inline-block;
+      vertical-align: top;
 
       >li{
         display: inline-block;
@@ -48,26 +110,7 @@
     .page-go{
       display: inline-block;
       margin-left: 30px;
-
-      >input{
-        padding: 0 5px;
-        width: 20px;
-        height: 20px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
-
-      >button{
-        color: #4a4a4a;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        outline: none;
-
-        &:hover{
-          color: #57b9f8;
-        }
-      }
+      vertical-align: top;
     }
   }
 }

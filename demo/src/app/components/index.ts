@@ -2,6 +2,7 @@ import { BreadCrumbComponent } from './widgets/breadcrumb/breadcrumb.component';
 import { SwitcherComponent } from './widgets/switcher/switcher.component';
 import { TabComponent } from './widgets/tab/tab.component';
 import { PagerComponent } from './widgets/pager/pager.component';
+import { DatepickerComponent } from './widgets/datepicker/datepicker.component';
 
 import { AutoHeightComponent } from './directives/autoheight/autoheight.component';
 import { DragComponent } from './directives/drag/drag.component';
@@ -16,9 +17,12 @@ export {
   SwitcherComponent,
   TabComponent,
   PagerComponent,
+  DatepickerComponent,
+
   AutoHeightComponent,
   DragComponent,
   TrimComponent,
+  
   FactoryPipeComponent,
   NumToChinesePipeComponent,
   FileSizePipeComponent
@@ -29,9 +33,12 @@ export const APP_COMPONENTS = [
   SwitcherComponent,
   TabComponent,
   PagerComponent,
+  DatepickerComponent,
+
   AutoHeightComponent,
   DragComponent,
   TrimComponent,
+
   FactoryPipeComponent,
   NumToChinesePipeComponent,
   FileSizePipeComponent

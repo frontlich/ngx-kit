@@ -68,7 +68,7 @@ export class BreadCrumbComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const rootSnap = this.activedRoute.snapshot.pathFromRoot[0];
-    
+
     this.list = [...this.headCrumbs];
     this.initBreadCrumb(rootSnap);
 
