@@ -11,6 +11,7 @@ import { PAGER_CONFIG_TOKEN, PagerConfig } from './pager.config';
   exports: [PagerComponent]
 })
 export class PagerModule {
+  /** 设置pager模块的默认配置 */
   static set(config?: PagerConfig): ModuleWithProviders {
     return {
       ngModule: PagerModule,

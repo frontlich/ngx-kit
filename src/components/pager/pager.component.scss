@@ -56,15 +56,17 @@
           color: #57b9f8;
         }
       }
-
-
+      
+      
       >.page-size-custom-input {
         position: absolute;
         top: -25px;
         left: -50%;
         width: 80px;
+        background: #fff;
         border: 1px solid #ccc;
         border-radius: 4px;
+        overflow: hidden;
 
         > input[type=text], button {
           float: left;
