@@ -50,6 +50,7 @@ export class DragDirective implements OnInit {
   @HostListener('mousedown', ['$event'])
   moveStart(e: MouseEvent) {
     if (!this.canDrag) { return; }
+    e.preventDefault();
     this.dragSub = Observable.timer(this.delay).subscribe(() => {
       this._canDrag = true;
       if (!this.nkDrag || !this.nkDragY) {
@@ -64,7 +65,7 @@ export class DragDirective implements OnInit {
     });
   }
 
-  @HostListener('mousemove', ['$event'])
+  @HostListener('document:mousemove', ['$event'])
   moving(e: MouseEvent) {
     if (!this._canDrag) {
       return false;
@@ -96,13 +97,8 @@ export class DragDirective implements OnInit {
     return false;
   }
 
-  @HostListener('mouseup')
+  @HostListener('document:mouseup')
   moveEnd() {
-    this.reset();
-  }
-
-  @HostListener('mouseout')
-  moveOut() {
     this.reset();
   }
 
@@ -125,8 +121,8 @@ export class DragDirective implements OnInit {
     this._zIndex = this.ele.style.zIndex;
     this._transition = this.ele.style.transition;
     if (!this.ele.style.position) {
-      console.error('drag指令：样式中必须要有定位属性');
       this.canDrag = false;
+      throw new Error('drag指令：样式中必须要有定位属性');
     }
   }
 }
