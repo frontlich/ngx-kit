@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { BreadCrumbModule, BreadCrumbComponent } from './components/breadcrumb';
+import { CheckBoxModule, CheckBoxComponent } from './components/checkbox';
 import { SwitcherModule, SwitcherComponent } from './components/switcher';
 import { TabModule, TabComponent, TabIndexDirective, TabContentDirective } from './components/tab';
 import { PagerModule, Pager, PagerComponent } from './components/pager';
@@ -17,12 +18,11 @@ import { FileSizePipe } from './pipes/fileSize.pipe';
 export { MultiEventPlugin, MultiEventPluginProvider } from './plugins/multi-event.plugin';
 export { ControlEventPlugin, ControlEventPluginProvider } from './plugins/control-event.plugin';
 
-export { deepAssign } from './utils/deepAssign';
-export * from './utils/operator';
-export * from './utils/consecutiveArr';
+export * from './utils';
 
 export {
   BreadCrumbModule, BreadCrumbComponent,
+  CheckBoxModule, CheckBoxComponent,
   SwitcherModule, SwitcherComponent,
   TabModule, TabComponent, TabIndexDirective, TabContentDirective,
   PagerModule, Pager, PagerComponent,
@@ -36,7 +36,7 @@ export {
 };
 
 const MODULES = [
-  BreadCrumbModule, SwitcherModule, TabModule, PagerModule, DatepickerModule,
+  BreadCrumbModule, CheckBoxModule, SwitcherModule, TabModule, PagerModule, DatepickerModule,
   AutoHeightModule, DragModule, TrimModule
 ];
 
