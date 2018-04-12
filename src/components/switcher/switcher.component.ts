@@ -67,11 +67,11 @@ export class SwitcherComponent implements ControlValueAccessor {
     this.isOpen = v === this.checked;
   }
 
-  registerOnChange(fn: (_: any) => {}) {
+  registerOnChange(fn: (_: any) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: () => {}) {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 }

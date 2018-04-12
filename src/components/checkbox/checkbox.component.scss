@@ -1,0 +1,67 @@
+$default-border: #e1e3eb;
+$checked-color: #57b9f8;
+$unchecked-disabled: #f5f7fa;
+$checked-disabled: #d2d8e0;
+
+.checkbox {
+  display: inline-block;
+  vertical-align: middle;
+  
+  .checkbox-item {
+    width: 20px;
+    height: 20px;
+    border: 1px solid $default-border;
+    cursor: pointer;
+
+    &:hover {
+      border-color: $checked-color;
+    }
+
+    > i {
+      display: none;
+      user-select: none;
+    }
+
+    &.disabled {
+      background: $unchecked-disabled;
+      cursor: not-allowed;
+
+      &:hover {
+        border-color: $default-border;
+      }
+
+      &.checked, &.indeterminate {
+        background: $checked-disabled;
+        border-color: $checked-disabled;
+      }
+    }
+
+    @mixin base-state($state) {
+      background: $checked-color;
+      border-color: $checked-color;
+
+      > i.#{$state} {
+        display: block;
+        text-align: center;
+        width: 18px;
+        line-height: 18px;
+        color: #fff;
+        font-style: normal;
+        font-weight: bold;
+      }
+    }
+
+    &.checked {
+      @include base-state(checked);
+    }
+
+    &.indeterminate {
+      @include base-state(indeterminate);
+
+      > i.indeterminate {
+        font-size: 21px;
+        line-height: 15px;
+      }
+    }
+  }
+}

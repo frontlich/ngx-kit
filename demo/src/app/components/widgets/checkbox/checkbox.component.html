@@ -1,0 +1,56 @@
+<p style="border: 1px solid #ccc;height: 50px;">{{abc}}{{def}}</p>
+
+<nk-checkbox parentId="test"></nk-checkbox>
+<ul style="padding-left: 20px;">
+  <li>
+    <nk-checkbox childId="test" parentId="child1" [(ngModel)]="def" [(indeterminate)]="abc"></nk-checkbox>
+    <ul style="margin-left: 20px;">
+      <li>
+        <nk-checkbox childId="child1"></nk-checkbox>
+      </li>
+      <li>
+        <nk-checkbox childId="child1"></nk-checkbox>
+      </li>
+      <li>
+        <nk-checkbox childId="child1"></nk-checkbox>
+      </li>
+      <li>
+        <nk-checkbox childId="child1"></nk-checkbox>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <nk-checkbox childId="test" parentId="child2"></nk-checkbox>
+    <ul style="margin-left: 20px;">
+      <li>
+        <nk-checkbox childId="child2"></nk-checkbox>
+      </li>
+      <li>
+        <nk-checkbox childId="child2"></nk-checkbox>
+      </li>
+      <li>
+        <nk-checkbox childId="child2"></nk-checkbox>
+      </li>
+      <li>
+        <nk-checkbox childId="child2"></nk-checkbox>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <nk-checkbox childId="test" parentId="child3"></nk-checkbox>
+    <ul style="margin-left: 20px;">
+      <li>
+        <nk-checkbox childId="child3"></nk-checkbox>
+      </li>
+      <li>
+        <nk-checkbox childId="child3"></nk-checkbox>
+      </li>
+      <li>
+        <nk-checkbox childId="child3"></nk-checkbox>
+      </li>
+      <li>
+        <nk-checkbox childId="child3"></nk-checkbox>
+      </li>
+    </ul>
+  </li>
+</ul>

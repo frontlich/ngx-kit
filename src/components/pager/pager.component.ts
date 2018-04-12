@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Optional, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
 
 import { PAGER_CONFIG_TOKEN, PagerConfig } from './pager.config';
 
@@ -155,6 +156,8 @@ export class PagerComponent implements OnInit, OnDestroy {
   customPageSizeShow: boolean;
   customPageSizeActive: boolean;
 
+  private _sub: Subscription;
+
   /** @property 分页符长度 */
   @Input() paginationLength: number = 7;
   /** @property 极简模式  */
@@ -174,7 +177,7 @@ export class PagerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.pagerData = this.data.pagerData;
     this.getPagination();
-    this.data.pagerSubject.subscribe(() => {
+    this._sub = this.data.pagerSubject.subscribe(() => {
       this.pagerData = this.data.pagerData;
       this.getPagination();
     });
@@ -250,6 +253,6 @@ export class PagerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.data.pagerSubject.unsubscribe();
+    this._sub.unsubscribe();
   }
 }

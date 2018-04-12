@@ -1,4 +1,9 @@
-<div class="checkbox">
-  <ng-template #default></ng-template>
-  <ng-template></ng-template>
+<div class="checkbox" (click)="toggle()">
+  <ng-template #default let-state="state" let-disabled="disabled">
+    <div class="checkbox-item {{state}}" [ngClass]="{disabled: disabled}">
+      <i class="checked">√</i>
+      <i class="indeterminate">-</i>
+    </div>
+  </ng-template>
+  <ng-template [ngTemplateOutlet]="checkboxTemplate || default" [ngTemplateOutletContext]="{state: state, disabled: disabled}"></ng-template>
 </div>

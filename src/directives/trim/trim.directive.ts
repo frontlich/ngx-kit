@@ -1,5 +1,5 @@
 import { Directive, Input, HostListener, Optional } from '@angular/core';
-import { NgModel, FormControlName } from '@angular/forms';
+import { NgModel, FormControl } from '@angular/forms';
 
 /**
  * trim指令：去除文本框或文本域输入内容的空格
@@ -25,6 +25,6 @@ export class TrimDirective {
 
   constructor(
     @Optional() private ngM: NgModel,
-    @Optional() private fcName: FormControlName
+    @Optional() private fcName: FormControl
   ) { }
 }

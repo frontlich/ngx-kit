@@ -1,4 +1,5 @@
 import { BreadCrumbComponent } from './widgets/breadcrumb/breadcrumb.component';
+import { CheckboxComponent } from './widgets/checkbox/checkbox.component';
 import { SwitcherComponent } from './widgets/switcher/switcher.component';
 import { TabComponent } from './widgets/tab/tab.component';
 import { PagerComponent } from './widgets/pager/pager.component';
@@ -14,6 +15,7 @@ import { FileSizePipeComponent } from './pipes/fileSize/fileSize.component';
 
 export {
   BreadCrumbComponent,
+  CheckboxComponent,
   SwitcherComponent,
   TabComponent,
   PagerComponent,
@@ -22,7 +24,7 @@ export {
   AutoHeightComponent,
   DragComponent,
   TrimComponent,
-  
+
   FactoryPipeComponent,
   NumToChinesePipeComponent,
   FileSizePipeComponent
@@ -30,6 +32,7 @@ export {
 
 export const APP_COMPONENTS = [
   BreadCrumbComponent,
+  CheckboxComponent,
   SwitcherComponent,
   TabComponent,
   PagerComponent,
