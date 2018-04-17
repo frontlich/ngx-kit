@@ -1,15 +1,18 @@
 <p style="border: 1px solid #ccc;height: 50px;">{{abc}}{{def}}</p>
+<div>
+  <button (click)="aaa=!aaa">切换</button>
+</div>
 
 <nk-checkbox parentId="test"></nk-checkbox>
 <ul style="padding-left: 20px;">
   <li>
-    <nk-checkbox childId="test" parentId="child1" [(ngModel)]="def" [(indeterminate)]="abc"></nk-checkbox>
+    <nk-checkbox childId="test" parentId="child1" [(ngModel)]="def"></nk-checkbox>
     <ul style="margin-left: 20px;">
       <li>
         <nk-checkbox childId="child1"></nk-checkbox>
       </li>
       <li>
-        <nk-checkbox childId="child1"></nk-checkbox>
+        <nk-checkbox checkedValue="test" [disabled]="aaa" childId="child1" [(ngModel)]="abc"></nk-checkbox>
       </li>
       <li>
         <nk-checkbox childId="child1"></nk-checkbox>

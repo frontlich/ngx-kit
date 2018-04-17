@@ -27,6 +27,7 @@ class ChildCheckbox {
   }
 
   addChild(checkbox: CheckBoxComponent) {
+    if (this.children.indexOf(checkbox) !== -1) { return; }
     checkbox.checkChange.subscribe((flag: boolean) => {
       checkbox.checked = flag;
       this.stopUp = false;
@@ -43,17 +44,12 @@ class ChildCheckbox {
 
   destoryItem(checkbox: CheckBoxComponent) {
     const i = this.children.indexOf(checkbox);
+    if (i === -1) { return; }
     this.children.splice(i, 1);
-    checkbox.checkChange.complete();
-    checkbox.indeterminateChange.complete();
   }
 
   destoryAll() {
     this.stateChange.complete();
-    this.children.forEach(child => {
-      child.checkChange.complete();
-      child.indeterminateChange.complete();
-    });
   }
 }
 
@@ -97,7 +93,7 @@ export class CheckboxService {
     if (this.parentHasSetMap.has(id)) { throw new Error('parentId has existed'); }
 
     const parentSub = this.checkExisting(id);
-    parentSub.next(true); // 通知父级注册完成
+    parentSub.next(true); // 通知子级，父级已注册完成
     parentSub.complete();
 
     const child = new ChildCheckbox();
@@ -120,6 +116,7 @@ export class CheckboxService {
   /** 注册子级复选框 */
   registerChildCheckbox(id: string, childCheckbox: CheckBoxComponent) {
     this.checkExisting(id).subscribe(() => {
+      console.log(id);
       this.childMap.get(id).addChild(childCheckbox);
     });
   }

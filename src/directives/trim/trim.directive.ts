@@ -15,16 +15,16 @@ export class TrimDirective {
 
     ele.value = trimmedStr;
 
-    if (this.ngM) {
-      this.ngM.reset(trimmedStr);
+    if (this.ngModel) {
+      this.ngModel.update.emit(trimmedStr);
     }
-    if (this.fcName) {
-      this.fcName.reset(trimmedStr);
+    if (this.formControl) {
+      this.formControl.setValue(trimmedStr);
     }
   }
 
   constructor(
-    @Optional() private ngM: NgModel,
-    @Optional() private fcName: FormControl
+    @Optional() private ngModel: NgModel,
+    @Optional() private formControl: FormControl
   ) { }
 }

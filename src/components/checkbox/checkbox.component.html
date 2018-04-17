@@ -1,6 +1,6 @@
 <div class="checkbox" (click)="toggle()">
   <ng-template #default let-state="state" let-disabled="disabled">
-    <div class="checkbox-item {{state}}" [ngClass]="{disabled: disabled}">
+    <div class="checkbox-item {{state}} {{disabled?'disabled':''}}">
       <i class="checked">√</i>
       <i class="indeterminate">-</i>
     </div>

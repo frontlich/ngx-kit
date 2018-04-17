@@ -70,22 +70,31 @@ export class Pager {
 
 @Component({
   selector: 'nk-pager',
-  templateUrl: './pager.component.html',
-  styleUrls: ['./pager.component.scss']
-  /* template: `
+  // templateUrl: './pager.component.html',
+  // styleUrls: ['./pager.component.scss']
+  template:
+  `
   <div class="page">
     <div class="page-size" *ngIf="!simpleModel">
       显示：
       <a [class.active]="pagerData.pageSize === 10" (click)="changePageSize(10)">10</a>
       <a [class.active]="pagerData.pageSize === 20" (click)="changePageSize(20)">20</a>
       <a [class.active]="pagerData.pageSize === 50" (click)="changePageSize(50)">50</a>
+      <div *ngIf="customPageSize" class="page-size-custom">
+        <a [class.active]="customPageSizeActive" (click)="customPageSizeShow = !customPageSizeShow">{{pagerData.pageSize}}</a>
+        <div class="page-size-custom-input" [hidden]="!customPageSizeShow">
+          <input type="text" #pageSize (keyup.enter)="changePageSize(pageSize.value);pageSize.value='';">
+          <button type="button" (click)="changePageSize(pageSize.value);pageSize.value='';">确定</button>
+        </div>
+      </div>
       条/页
       <span style="margin-left: 15px;">共{{pagerData.total}}条</span>
     </div>
     <div class="page-center">
       <ul class="pagination">
         <li class="page-change" (click)="changePageNoTo(-1)" [class.forbidden]="pagerData.pageNo === 1">&lt;</li>
-        <li *ngFor="let item of pageNumList" (click)="changePageNo(item)"
+        <li *ngFor="let item of pageNumList"
+          (click)="changePageNo(item)"
           [class.active]="pagerData.pageNo === item"
           [style.cursor]="item === '...' ? 'default' : 'pointer'">{{item}}</li>
         <li class="page-change" (click)="changePageNoTo(1)" [class.forbidden]="pagerData.pageNo === totalPages">&gt;</li>
@@ -103,17 +112,66 @@ export class Pager {
       position: relative;
       user-select: none;
       line-height: 25px; }
+    .page input {
+      padding: 0 5px;
+      vertical-align: middle;
+      width: 25px;
+      height: 20px;
+      font-size: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none; }
+    .page button {
+      vertical-align: middle;
+      font-size: 14px;
+      color: #4a4a4a;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      outline: none; }
+    .page button:hover {
+      color: #57b9f8; }
     .page .page-size > a {
+      color: #4a4a4a;
       cursor: pointer; }
-      .page .page-size > a.active {
-        color: #57b9f8; }
+    .page .page-size > a.active {
+      color: #57b9f8; }
+    .page .page-size .page-size-custom {
+      display: inline-block;
+      position: relative;
+      cursor: pointer; }
+    .page .page-size .page-size-custom > a {
+      display: inline-block;
+      padding: 0 5px;
+      line-height: 23px;
+      border-width: 1px;
+      border-style: dashed;
+      border-color: #ccc; }
+    .page .page-size .page-size-custom > a.active {
+      border-color: #57b9f8;
+      color: #57b9f8; }
+    .page .page-size .page-size-custom > .page-size-custom-input {
+      position: absolute;
+      top: -25px;
+      left: -50%;
+      width: 80px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden; }
+    .page .page-size .page-size-custom > .page-size-custom-input > input[type=text],
+    .page .page-size .page-size-custom > .page-size-custom-input button {
+      float: left;
+      border: none;
+      border-radius: 0; }
     .page .page-center {
       position: absolute;
       top: 0;
       left: 50%;
       transform: translateX(-50%); }
     .page .page-center ul.pagination {
-      display: inline-block; }
+      display: inline-block;
+      vertical-align: top; }
     .page .page-center ul.pagination > li {
       display: inline-block;
       padding: 0 5px;
@@ -129,23 +187,10 @@ export class Pager {
       cursor: not-allowed; }
     .page .page-center .page-go {
       display: inline-block;
-      margin-left: 30px; }
-    .page .page-center .page-go > input {
-      padding: 0 5px;
-      width: 20px;
-      height: 20px;
-      border: 1px solid #ccc;
-      border-radius: 4px; }
-    .page .page-center .page-go > button {
-      color: #4a4a4a;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      outline: none; }
-    .page .page-center .page-go > button:hover {
-      color: #57b9f8; }
+      margin-left: 30px;
+      vertical-align: top; }
     `
-  ] */
+  ]
 })
 export class PagerComponent implements OnInit, OnDestroy {
 

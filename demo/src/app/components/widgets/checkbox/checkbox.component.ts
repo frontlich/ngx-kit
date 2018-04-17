@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
   templateUrl: './checkbox.component.html'
 })
 export class CheckboxComponent {
+  aaa: boolean = false;
   abc: boolean;
   def: boolean = true;
 }

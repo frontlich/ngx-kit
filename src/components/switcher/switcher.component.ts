@@ -52,8 +52,8 @@ export class SwitcherComponent implements ControlValueAccessor {
 
   isOpen: boolean;
 
-  private onChange: Function;
-  private onTouched: Function;
+  private onChange: Function = Function.prototype;
+  private onTouched: Function = Function.prototype;
 
   @Input('checked-value') checked: any = true;
   @Input('unchecked-value') unchecked: any = false;

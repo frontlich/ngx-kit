@@ -4,5 +4,5 @@ import { Component } from '@angular/core';
   templateUrl: './switcher.component.html'
 })
 export class SwitcherComponent {
-  abc = true;
+  abc = false;
 }

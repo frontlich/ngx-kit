@@ -5,8 +5,70 @@ import { CheckboxService } from './checkbox.service';
 
 @Component({
   selector: 'nk-checkbox',
-  templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.scss'],
+  // templateUrl: './checkbox.component.html',
+  // styleUrls: ['./checkbox.component.scss'],
+  template:
+    `
+  <div class="checkbox" (click)="toggle()">
+    <ng-template #default let-state="state" let-disabled="disabled">
+      <div class="checkbox-item {{state}} {{disabled?'disabled':''}}">
+        <i class="checked">√</i>
+        <i class="indeterminate">-</i>
+      </div>
+    </ng-template>
+    <ng-template [ngTemplateOutlet]="checkboxTemplate || default"
+    [ngTemplateOutletContext]="{state: state, disabled: disabled}"></ng-template>
+  </div>
+  `,
+  styles: [
+    `
+    .checkbox {
+      display: inline-block;
+      vertical-align: middle; }
+    .checkbox .checkbox-item {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #e1e3eb;
+      cursor: pointer; }
+    .checkbox .checkbox-item:hover {
+      border-color: #57b9f8; }
+    .checkbox .checkbox-item > i {
+      display: none;
+      user-select: none; }
+    .checkbox .checkbox-item.disabled {
+      background: #f5f7fa;
+      cursor: not-allowed; }
+    .checkbox .checkbox-item.disabled:hover {
+      border-color: #e1e3eb; }
+    .checkbox .checkbox-item.disabled.checked, .checkbox .checkbox-item.disabled.indeterminate {
+      background: #d2d8e0;
+      border-color: #d2d8e0; }
+    .checkbox .checkbox-item.checked {
+      background: #57b9f8;
+      border-color: #57b9f8; }
+      .checkbox .checkbox-item.checked > i.checked {
+        display: block;
+        text-align: center;
+        width: 18px;
+        line-height: 18px;
+        color: #fff;
+        font-style: normal;
+        font-weight: bold; }
+    .checkbox .checkbox-item.indeterminate {
+      background: #57b9f8;
+      border-color: #57b9f8; }
+    .checkbox .checkbox-item.indeterminate > i.indeterminate {
+      display: block;
+      text-align: center;
+      width: 18px;
+      line-height: 18px;
+      color: #fff;
+      font-style: normal;
+      font-weight: bold; }
+    .checkbox .checkbox-item.indeterminate > i.indeterminate {
+      font-size: 21px;
+      line-height: 15px; }
+  `],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => CheckBoxComponent),
@@ -39,7 +101,19 @@ export class CheckBoxComponent implements OnInit, ControlValueAccessor, OnDestro
   // 未选中时绑定的值
   @Input() uncheckedValue: any = false;
   // 是否禁用
-  @Input() disabled: boolean;
+  private _disabled: boolean;
+  @Input()
+  set disabled(v: boolean) {
+    this._disabled = !!v;
+    if (v) {
+      this.unregisterCheckbox();
+    } else {
+      this.registerCheckbox();
+    }
+  }
+  get disabled() {
+    return this._disabled;
+  }
 
   // 半选状态
   private _indeterminate: boolean;
@@ -64,11 +138,24 @@ export class CheckBoxComponent implements OnInit, ControlValueAccessor, OnDestro
   constructor(private checkService: CheckboxService) { }
 
   ngOnInit() {
+    this.registerCheckbox();
+  }
+
+  registerCheckbox() {
     if (this.parentId) {
       this.checkService.registerParentCheckbox(this.parentId, this);
     }
     if (this.childId) {
       this.checkService.registerChildCheckbox(this.childId, this);
+    }
+  }
+
+  unregisterCheckbox() {
+    if (this.parentId) {
+      this.checkService.unregisterParent(this.parentId, this);
+    }
+    if (this.childId) {
+      this.checkService.unregisterChild(this.childId, this);
     }
   }
 
@@ -98,11 +185,8 @@ export class CheckBoxComponent implements OnInit, ControlValueAccessor, OnDestro
   }
 
   ngOnDestroy() {
-    if (this.parentId) {
-      this.checkService.unregisterParent(this.parentId, this);
-    }
-    if (this.childId) {
-      this.checkService.unregisterChild(this.childId, this);
-    }
+    this.unregisterCheckbox();
+    this.checkChange.complete();
+    this.indeterminateChange.complete();
   }
 }
