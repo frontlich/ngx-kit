@@ -1,3 +1,4 @@
 export { deepAssign } from './deepAssign';
-export * from './consecutiveArr';
+export * from './arrConsecutive';
+export * from './arrDimension';
 export * from './operator';

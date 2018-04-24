@@ -116,7 +116,6 @@ export class CheckboxService {
   /** 注册子级复选框 */
   registerChildCheckbox(id: string, childCheckbox: CheckBoxComponent) {
     this.checkExisting(id).subscribe(() => {
-      console.log(id);
       this.childMap.get(id).addChild(childCheckbox);
     });
   }

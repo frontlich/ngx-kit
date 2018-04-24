@@ -34,11 +34,11 @@ export const geoSequ = (start: number, count: number, rate: number = 1) => {
 export const fiboSequ = (count: number) => {
   if (count < 2) { return [1]; }
 
-  const sum = [1, 1];
+  const fibo = [1, 1];
 
   for (let i = 2; i < count; i++) {
-    sum[i] = sum[i - 1] + sum[i - 2];
+    fibo[i] = fibo[i - 1] + fibo[i - 2];
   }
 
-  return sum;
+  return fibo;
 };
