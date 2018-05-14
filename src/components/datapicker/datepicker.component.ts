@@ -4,7 +4,8 @@ import { Component } from '@angular/core';
   selector: '[nk-datepicker]',
   // templateUrl: './datepicker.component.html',
   template: '',
-  styleUrls: ['./datepicker.component.scss']
+  // styleUrls: ['./datepicker.component.scss']
+  styles: ['']
 })
 export class DatepickerComponent {
 
